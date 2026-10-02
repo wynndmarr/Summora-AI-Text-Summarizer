@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    
+    <link rel="icon" type="image/png"
+          href="logo_summora.png">
+
+    <meta
+        name="description"
+        content="Summora - Smart Text Summarizer & Main Idea Extractor"
+    >
+
+    <title>Summora — AI Text Summarizer</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<div id="confirmModal" class="custom-modal hidden">
+    <div class="custom-modal-overlay"></div>
+
+    <div class="custom-modal-box">
+
+        <h3 id="confirmTitle">
+            Hapus Riwayat?
+        </h3>
+
+        <p id="confirmMessage">
+            Hapus riwayat rangkuman ini?
+        </p>
+
+        <div class="custom-modal-actions">
+            <button
+                type="button"
+                id="confirmCancel"
+                class="modal-cancel-button"
+            >
+                Batal
+            </button>
+
+            <button
+                type="button"
+                id="confirmDelete"
+                class="modal-delete-button"
+            >
+                Hapus
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="customToast" class="custom-toast">
+
+    <div class="toast-icon" id="toastIcon">
+        !
+    </div>
+
+    <div class="toast-content">
+
+        <strong id="toastTitle">
+            Peringatan!
+        </strong>
+
+        <span id="toastMessage">
+            Teks masih terlalu singkat. Silakan masukkan minimal
+            50 kata agar dapat dirangkum dengan baik.
+        </span>
+
+    </div>
+
+    <button
+        type="button"
+        id="toastClose"
+        class="toast-close"
+        aria-label="Tutup notifikasi"
+    >
+        ×
+    </button>
+
+</div>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-content">
+
+      <a href="/" class="brand">
+    <div class="brand-icon">
+        <img
+            src="logo_summora.png"
+            alt="Summora Logo"
+        >
+    </div>
+
+    <div class="brand-text">
+        <span class="brand-name">Summora</span>
+        <span class="brand-tagline">Smart Text Summarizer</span>
+    </div>
+</a>
+        <div class="nav-auth">
+
+            <div class="status" id="authStatus">
+                <span class="status-dot"></span>
+                <span id="authStatusText">Checking...</span>
+            </div>
+
+            <button
+                type="button"
+                id="authButton"
+                class="secondary-button"
+            >
+                Login
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+
+    <main>
+
+        <section class="hero">
+
+            <div class="container hero-content">
+
+                <span class="ai-badge">
+                    AI-POWERED TEXT ANALYSIS
+                </span>
+
+                <h1 class="hero-title shimmer-title">
+                    Turn long text into
+                    <span>clear ideas.</span>
+                </h1>
+
+                <p>
+                    Summora membantu Anda memahami teks panjang
+                    dengan mengambil inti utama dan poin-poin
+                    penting secara cepat.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="workspace">
+
+            <div class="container">
+
+                <div class="summarizer-card">
+
+
+                    <div class="input-section">
+
+                        <div class="section-heading">
+
+                            <div>
+
+                                <span class="section-label">
+                                    INPUT TEXT
+                                </span>
+
+                                <h2>
+                                    Teks yang ingin dirangkum
+                                </h2>
+
+                            </div>
+
+                            <span
+                                id="characterCount"
+                                class="character-count"
+                            >
+                                0 / 100.000
+                            </span>
+
+                        </div>
+
+
+                        <textarea
+                            id="textInput"
+                            placeholder="Tempelkan artikel, materi pelajaran, dokumen, atau paragraf panjang Anda di sini..."
+                            maxlength="100000"
+                            spellcheck="true"
+                        ></textarea>
+
+
+                        <div class="input-footer">
+
+                            <span>
+                            Minimal 50 karakter
+                            </span>
+
+                            <button
+                                id="summarizeButton"
+                                class="primary-button"
+                            >
+
+                               <span id="buttonIcon">
+                                    ✦
+                                           </span>
+
+                                         <span id="buttonText">
+                                    &nbsp;Rangkum Teks
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="resultSection"
+                        class="result-section hidden"
+                    >
+
+                        <div class="result-header">
+
+                            <div>
+
+                                <span class="section-label">
+                                    HASIL ANALISIS
+                                </span>
+
+                                <h2>
+                                    Ringkasan Anda
+                                </h2>
+
+                            </div>
+
+                            <span class="ai-badge">
+                                ✦ AI Generated
+                            </span>
+
+                        </div>
+
+
+                        <div class="main-idea-card">
+
+                            <div class="result-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <span class="result-label">
+                                    INTI UTAMA
+                                </span>
+
+                                <p id="mainIdea">
+                                    -
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                      
+
+                        <div class="points-card">
+
+                            <div class="points-heading">
+
+                                <div class="result-icon small">
+                                    ≡
+                                </div>
+
+                                <div>
+
+                                    <span class="result-label">
+                                        RANGKUMAN POIN
+                                    </span>
+
+                                    <h3>
+                                        Poin-poin penting
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
+
+                            <ul
+                                id="summaryPoints"
+                                class="summary-points"
+                            ></ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="history-section">
+
+            <div class="container">
+
+                <div class="history-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            YOUR ACTIVITY
+                        </span>
+
+                        <h2>
+                            Riwayat Rangkuman Summora
+                        </h2>
+
+                        <p>
+                            Ringkasan yang pernah Anda buat
+                            tersimpan di database.
+                        </p>
+
+                    </div>
+
+                    <button
+                        id="refreshHistory"
+                        class="secondary-button"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="historyContainer"
+                    class="history-container"
+                >
+
+                    <div class="loading-history">
+                        Memuat riwayat...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+<div id="authModal" class="auth-modal hidden">
+
+    <div class="auth-card">
+
+        <button
+            type="button"
+            id="closeAuthModal"
+            class="auth-close"
+        >
+            ×
+        </button>
+
+    
+
+        <div id="loginView">
+
+            <span class="section-label">
+              Selamat Datang
+            </span>
+
+            <h2>
+                Login ke Summora
+            </h2>
+
+            <p class="auth-description">
+                Masuk untuk menggunakan Summora dan menyimpan
+                riwayat rangkuman Anda.
+            </p>
+
+            <form id="loginForm">
+
+                <label for="loginEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="nama@email.com"
+                    required
+                >
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Masukkan password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-button auth-submit"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <p
+                id="loginMessage"
+                class="auth-message"
+            ></p>
+
+            <p class="auth-switch">
+                Belum punya akun?
+                <button
+                    type="button"
+                    id="showRegister"
+                >
+                    Register
+                </button>
+            </p>
+
+        </div>
+
+
+        <div
+            id="registerView"
+            class="hidden"
+        >
+
+            <span class="section-label">
+                CREATE ACCOUNT
+            </span>
+
+            <h2>
+                Buat akun Summora
+            </h2>
+
+            <p class="auth-description">
+                Buat akun untuk menyimpan seluruh riwayat
+                rangkuman Anda.
+            </p>
+
+            <form id="registerForm">
+
+                <label for="registerName">
+                    Nama
+                </label>
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Nama Anda"
+                    required
+                >
+
+                <label for="registerEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="nama@email.com"
+                    required
+                >
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Minimal 6 karakter"
+                    minlength="6"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-button auth-submit"
+                >
+                    Register
+                </button>
+
+            </form>
+
+            <p
+                id="registerMessage"
+                class="auth-message"
+            ></p>
+
+            <p class="auth-switch">
+                Sudah punya akun?
+                <button
+                    type="button"
+                    id="showLogin"
+                >
+                    Login
+                </button>
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+</main>
+    <footer>
+
+        <div class="container footer-content">
+
+            <div>
+
+                <strong>
+                    Summora
+                </strong>
+
+                <span>
+                    Smart Text Summarizer
+                </span>
+
+            </div>
+
+            <span>
+                © 2026 Summora by wynnddmar
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
