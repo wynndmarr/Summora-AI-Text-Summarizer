@@ -670,8 +670,6 @@ Project ini juga menjadi media pembelajaran untuk memahami bagaimana frontend, b
 
 **Wynand Mario Petta**
 
-SMKN 1 Surabaya
-XI TKJ 1
 
 ### Interest
 
