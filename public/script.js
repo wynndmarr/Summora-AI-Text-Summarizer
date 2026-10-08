@@ -2252,3 +2252,31 @@ if (typeof textInput !== "undefined" && typeof summarizeButton !== "undefined") 
         }
     });
 }
+
+document.addEventListener("keydown", function (event) {
+    
+    if (event.key === "F12") {
+        event.preventDefault();
+        return false;
+    }
+
+    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "i") {
+        event.preventDefault();
+        return false;
+    }
+
+    if (event.ctrlKey && event.shiftKey && event.key.toLowerCase() === "j") {
+        event.preventDefault();
+        return false;
+    }
+
+    if (event.ctrlKey && event.key.toLowerCase() === "u") {
+        event.preventDefault();
+        return false;
+    }
+});
+
+
+document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+});
