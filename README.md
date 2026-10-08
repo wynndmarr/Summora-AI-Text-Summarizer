@@ -159,7 +159,7 @@ Light Mode dan Dark Mode
 
 Summora memiliki dua pilihan tampilan:
 
-<p align="center"> <img src="lightmode.png" width="400" style="border-radius: 12px; margin-right: 50px;"> <img src="darkmode.png" width="400" style="border-radius: 12px;"> </p>
+<p align="center"> <img src="lightmode.png" width="400" style="border-radius: 13px; margin-right: 50px;"> <img src="darkmode.png" width="400" style="border-radius: 13px;"> </p>
 Light Mode
 Dark Mode
 
@@ -535,7 +535,7 @@ Selain menjadi aplikasi rangkuman, project ini juga menjadi latihan untuk memaha
 
 **Wynndmarr**  
 <p align="left">
-  <img src="bleach.jfif" width="170" style="border-radius: 12px;">
+  <img src="bleach.jfif" width="170" style="border-radius: 13px;">
 </p>
 
  
@@ -557,5 +557,5 @@ Project ini dibuat untuk keperluan pembelajaran dan pengembangan.
 
 
 <p align="center">
-  <img src="thank.jpeg" width="400" style="border-radius: 12px;">
+  <img src="thank.jpeg" width="400" style="border-radius: 13px;">
 </p>
